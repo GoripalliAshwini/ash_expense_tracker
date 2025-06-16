@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+
+{% block title %}Add Transaction{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 class="text-center">Add New Transaction</h1>
+
+  <div class="col-md-6 mx-auto calculator-bg" >
+    <form method="POST">
+      {% csrf_token %}
+      {{form.as_p}}
+
+      <div class="d-flex justify-content-between mt-3">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}

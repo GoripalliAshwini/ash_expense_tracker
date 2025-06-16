@@ -1,0 +1,57 @@
+{% extends 'index.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1>Welcome to Your Expense Tracker</h1>
+<div class="card-group">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Total Balance</h5>
+      <p class="card-text">&#8377;{{balance}}</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Total Income</h5>
+      <p class="card-text">&#8377;{{total_income}}</p>
+      
+    </div>
+  </div>
+  <div class="card">
+
+    <div class="card-body">
+      <h5 class="card-title">Total Expense</h5>
+      <p class="card-text">&#8377;{{total_expense}}</p>
+    </div>
+  </div>
+</div>
+<br>
+<div>
+    <h1>Recent Transactions</h1>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Description</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Category</th>
+    </tr>
+  </thead>
+  <tbody>
+   {% for t in recent_transactions %}
+  <tr>
+    <td>{{ t.Date }}</td>
+    <td>{{ t.Description }}</td>
+    <td>₹{{ t.Amount }}</td>
+    <td>{{ t.Category }}</td>
+  </tr>
+  {% empty %}
+  <tr>
+    <td colspan="4">No recent transactions.</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

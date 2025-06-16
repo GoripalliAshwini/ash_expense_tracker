@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-q$st)72izk_*#=d-#d=7ctg25ts(iun(dhykkl3l9ls@(vu0+i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'expensetracker.middleware.RequestLogginMiddleware.RequestLoggingMiddleware',  # Custom middleware for logging requests
 ]
 
 ROOT_URLCONF = 'expensetracker.urls'
@@ -75,10 +76,14 @@ WSGI_APPLICATION = 'expensetracker.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql',
+       'NAME':'expense',
+       'USER': 'postgres',
+       'PASSWORD': 'Aiishu19',
+       'HOST': 'localhost',
+       'PORT': '5432',
+   }
 }
 
 
@@ -115,8 +120,19 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+import os
 
-STATIC_URL = 'static/'
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'public', 'static'),  # Where your custom CSS/JS lives during development
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # For collectstatic in production
+
+# Media files (User uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Should be separate from static
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

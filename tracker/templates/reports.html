@@ -1,0 +1,84 @@
+{% extends 'index.html' %}
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<div class="container ">
+  <h1 class="text-center mb-4">Reports Dashboard</h1>
+
+  <!-- Pie Chart Card -->
+  <div class="row mb-5">
+    <div class="col-md-8 offset-md-2">
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Expense Distribution by Category</h5>
+        </div>
+        <div class="card-body">
+          <div id="expensePieChart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bar Chart Card -->
+  <div class="row">
+    <div class="col-md-10 offset-md-1">
+      <div class="card shadow-lg">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0">Monthly Income & Expense Summary</h5>
+        </div>
+        <div class="card-body">
+          <div id="monthlyBarChart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script>
+ const expenseData = JSON.parse(`{{ expense_data_json|escapejs }}`);
+  const monthlyData = JSON.parse(`{{ monthly_summary_json|escapejs }}`);
+  // Pie Chart using Plotly
+  const pieData = [{
+    type: 'pie',
+    labels: expenseData.map(e => e.Category),
+    values: expenseData.map(e => e.total),
+    textinfo: 'label+percent',
+    hoverinfo: 'label+value+percent',
+    marker: {
+      colors: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
+    }
+  }];
+  Plotly.newPlot('expensePieChart', pieData, {
+    title: 'Expenses by Category',
+    margin: { t: 40, l: 0, r: 0, b: 0 }
+  });
+
+  // Bar Chart using Plotly
+  const barData = [
+    {
+      x: monthlyData.months,
+      y: monthlyData.income,
+      name: 'Income',
+      type: 'bar',
+      marker: { color: '#4CAF50' }
+    },
+    {
+      x: monthlyData.months,
+      y: monthlyData.expense,
+      name: 'Expense',
+      type: 'bar',
+      marker: { color: '#F44336' }
+    }
+  ];
+  const barLayout = {
+    title: 'Monthly Income vs Expense',
+    barmode: 'group',
+    xaxis: { title: 'Month' },
+    yaxis: { title: 'Amount', zeroline: true }
+  };
+  Plotly.newPlot('monthlyBarChart', barData, barLayout);
+</script>
+
+
+{% endblock %}

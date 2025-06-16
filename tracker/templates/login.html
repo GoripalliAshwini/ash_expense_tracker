@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Login Page{% endblock %}
+
+{% block content %}
+ <div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+<div  style="margin-top: 50px !important">
+<h3 style="text-align: center;">Login Page</h3>
+<form method="POST" action="{% url 'login_view' %}" id="form">
+    {% csrf_token %}
+    <div class="form-control">
+        <label for="text">Username</label>
+        <input type="text" name="username" id="text" placeholder="Username..." />
+        <p><small>Unique username is required</small></p>
+    </div>
+    <div class="form-control">
+        <label for="amount">Password <br />
+        </label>
+        <input type="password" name="password" id="amount" placeholder="Password ..." />
+    </div>
+    <p> Don't have an account <a href="{% url 'register_view' %}">Register</a></p>
+
+    <div class="d-flex justify-content-center">
+  <button class="btn btn-success" style="width: 150px;" type="submit">Login</button>
+</div>
+</form>
+</div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+ {% endblock %}

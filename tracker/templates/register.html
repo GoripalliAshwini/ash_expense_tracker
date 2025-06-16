@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Register Page{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+<div  style="margin-top: 50px !important">
+<h3 style="text-align: center;">Register Page</h3>
+<form method="POST" id="form">
+    {% csrf_token %}
+    <div class="form-control">
+        <label for="text">Username</label>
+        <input type="text" name="username" id="text" placeholder="Username..." />
+        <p><small>Unique username is required</small></p>
+    </div>
+    <div class="form-control">
+        <label for="text">First name</label>
+        <input type="text" name="first_name" id="text" placeholder="First Name..." />
+      
+    </div>
+    <div class="form-control">
+        <label for="text">Last name</label>
+        <input type="text" name="last_name" id="text" placeholder="Last Name..." />
+      
+    </div>
+    <div class="form-control">
+        <label for="amount">Password <br />
+        </label>
+        <input type="password" name="password" id="amount" placeholder="Password ..." />
+    </div>
+    <p> Already have an account <a href="{% url 'login_view' %}">Login</a></p>
+    <button class="btn" type="submit" style="background-color: chartreuse;">Register</button>
+</form>
+
+</div>
+{% endblock %}
+
